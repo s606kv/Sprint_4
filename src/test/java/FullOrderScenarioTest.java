@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
@@ -33,25 +34,26 @@ public class FullOrderScenarioTest {
     @Parameterized.Parameters
     public static Object[][] clientInfo() {
         return new Object[][] {
-                {"Соник", "Ёжик", "Москва", "Беговая", "89222222222", "20.12.2024"},
-                {"Марио", "Бразер", "Тында", "Спартак", "89111111111", "20.01.2026"},
+                {"Соник", "Ёжик", "Москва", "Беговая", "89222222222", "25.12.2024"},
+                {"Марио", "Бразер", "Тында", "Спартак", "89111111111", "25.01.2026"},
         };
     }
 
-    @Test // проверка сценария по входу через ВЕРХНЮЮ кнопку "заказать"
-    public void checkItIsPossibleToMakeAnOrderFromUpperOrderButton() {
-        // driver = new FirefoxDriver(); // драйвер для браузера Firefox
+    @Before
+    public void creation () {
+//        driver = new FirefoxDriver(); // драйвер для браузера Firefox
         driver = new ChromeDriver(); // драйвер для браузера Chrome
         driver.manage().window().maximize();
-
         // открываем страницу
-        String landingPage = "https://qa-scooter.praktikum-services.ru/";
-        driver.get(landingPage);
+        driver.get(MainLandingPage.URL_OF_MAIN_PAGE);
+    }
 
+    @Test // проверка сценария по входу через ВЕРХНЮЮ кнопку "заказать"
+    public void testItIsPossibleToMakeAnOrderFromUpperOrderButton() {
         // экземпляры классов
         MainLandingPage objMainLandingPage = new MainLandingPage(driver);
-        ClientData client = new ClientData(driver);
-        AboutRent aboutRent = new AboutRent(driver);
+        ClientDataPage client = new ClientDataPage(driver);
+        AboutRentPage objAboutRentPage = new AboutRentPage(driver);
 
         // реализуем действия
         objMainLandingPage.cookieButtonClick();
@@ -59,31 +61,20 @@ public class FullOrderScenarioTest {
         client.waitClientDataFormIsVisible();
         client.addClientInfo (name, surname, address, station_name, telephoneNumber);
         client.nextStepButtonClick();
-        aboutRent.waitAboutRentFormIsVisible();
-        aboutRent.chooseDeliveryDate (date);
-        aboutRent.chooseRentPeriod();
-        aboutRent.checkboxColourBlackClick();
-        aboutRent.addComment("привет. это тест.");
-        aboutRent.orderButtonConfirmClick();
-        aboutRent.waitForConfirmationQuestion();
-        aboutRent.orderButtonConfirmFinalClick();
-        aboutRent.waitForConfirmationWindow(); // баг - невозможно оформить заказ в Chrome
+        objAboutRentPage.waitAboutRentFormIsVisible();
+        objAboutRentPage.addRentInfo(date, "привет, курьер");
+        objAboutRentPage.orderButtonConfirmClick();
+        objAboutRentPage.waitForConfirmationQuestion();
+        objAboutRentPage.orderButtonConfirmFinalClick();
+        objAboutRentPage.waitForConfirmationWindow(); // баг - невозможно оформить заказ в Chrome
     }
 
     @Test // проверка сценария по входу через НИЖНЮЮ кнопку "заказать"
-    public void checkItIsPossibleToMakeAnOrderFromLowerOrderButton() {
-        // driver = new FirefoxDriver(); // драйвер для браузера Firefox
-        driver = new ChromeDriver(); // драйвер для браузера Chrome
-        driver.manage().window().maximize();
-
-        // открываем страницу
-        String landingPage = "https://qa-scooter.praktikum-services.ru/";
-        driver.get(landingPage);
-
+    public void testItIsPossibleToMakeAnOrderFromLowerOrderButton() {
         // экземпляры классов
         MainLandingPage objMainLandingPage = new MainLandingPage(driver);
-        ClientData client = new ClientData(driver);
-        AboutRent aboutRent = new AboutRent(driver);
+        ClientDataPage client = new ClientDataPage(driver);
+        AboutRentPage objAboutRentPage = new AboutRentPage(driver);
 
         // реализуем действия
         objMainLandingPage.cookieButtonClick();
@@ -93,15 +84,12 @@ public class FullOrderScenarioTest {
         client.waitClientDataFormIsVisible();
         client.addClientInfo (name, surname, address, station_name, telephoneNumber);
         client.nextStepButtonClick();
-        aboutRent.waitAboutRentFormIsVisible();
-        aboutRent.chooseDeliveryDate (date);
-        aboutRent.chooseRentPeriod();
-        aboutRent.checkboxColourBlackClick();
-        aboutRent.addComment("привет. это тест.");
-        aboutRent.orderButtonConfirmClick();
-        aboutRent.waitForConfirmationQuestion();
-        aboutRent.orderButtonConfirmFinalClick();
-        aboutRent.waitForConfirmationWindow(); // баг - невозможно оформить заказ в Chrome
+        objAboutRentPage.waitAboutRentFormIsVisible();
+        objAboutRentPage.addRentInfo(date, "привет, курьер");
+        objAboutRentPage.orderButtonConfirmClick();
+        objAboutRentPage.waitForConfirmationQuestion();
+        objAboutRentPage.orderButtonConfirmFinalClick();
+        objAboutRentPage.waitForConfirmationWindow(); // баг - невозможно оформить заказ в Chrome
     }
 
     // закрыли браузер
