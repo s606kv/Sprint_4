@@ -32,14 +32,14 @@ public class AccordionTest {
     @Parameterized.Parameters
     public static Object[][] expectedFAQData() {
         return new Object[][] {
-                {FAQ.QUESTION_1_LOCATOR, FAQ.ANSWER_1_LOCATOR, FAQ.QUESTION_1_TEXT, FAQ.ANSWER_1_TEXT},
-                {FAQ.QUESTION_2_LOCATOR, FAQ.ANSWER_2_LOCATOR, FAQ.QUESTION_2_TEXT, FAQ.ANSWER_2_TEXT},
-                {FAQ.QUESTION_3_LOCATOR, FAQ.ANSWER_3_LOCATOR, FAQ.QUESTION_3_TEXT, FAQ.ANSWER_3_TEXT},
-                {FAQ.QUESTION_4_LOCATOR, FAQ.ANSWER_4_LOCATOR, FAQ.QUESTION_4_TEXT, FAQ.ANSWER_4_TEXT},
-                {FAQ.QUESTION_5_LOCATOR, FAQ.ANSWER_5_LOCATOR, FAQ.QUESTION_5_TEXT, FAQ.ANSWER_5_TEXT},
-                {FAQ.QUESTION_6_LOCATOR, FAQ.ANSWER_6_LOCATOR, FAQ.QUESTION_6_TEXT, FAQ.ANSWER_6_TEXT},
-                {FAQ.QUESTION_7_LOCATOR, FAQ.ANSWER_7_LOCATOR, FAQ.QUESTION_7_TEXT, FAQ.ANSWER_7_TEXT},
-                {FAQ.QUESTION_8_LOCATOR, FAQ.ANSWER_8_LOCATOR, FAQ.QUESTION_8_TEXT, FAQ.ANSWER_8_TEXT},
+                {FAQ.QUESTION_ABOUT_PRICE, FAQ.ANSWER_ABOUT_PRICE, FAQ.QUESTION_ABOUT_PRICE_TEXT, FAQ.ANSWER_ABOUT_PRICE_TEXT},
+                {FAQ.QUESTION_ABOUT_QUANTITY, FAQ.ANSWER_ABOUT_QUANTITY, FAQ.QUESTION_ABOUT_QUANTITY_TEXT, FAQ.ANSWER_ABOUT_QUANTITY_TEXT},
+                {FAQ.QUESTION_ABOUT_RENT_TIME, FAQ.ANSWER_ABOUT_RENT_TIME, FAQ.QUESTION_ABOUT_RENT_TIME_TEXT, FAQ.ANSWER_ABOUT_RENT_TIME_TEXT},
+                {FAQ.QUESTION_ABOUT_TODAY_RENT, FAQ.ANSWER_ABOUT_TODAY_RENT, FAQ.QUESTION_ABOUT_TODAY_RENT_TEXT, FAQ.ANSWER_ABOUT_TODAY_RENT_TEXT},
+                {FAQ.QUESTION_ABOUT_RETURNING, FAQ.ANSWER_ABOUT_RETURNING, FAQ.QUESTION_ABOUT_RETURNING_TEXT, FAQ.ANSWER_ABOUT_RETURNING_TEXT},
+                {FAQ.QUESTION_ABOUT_CHARGER, FAQ.ANSWER_ABOUT_CHARGER, FAQ.QUESTION_ABOUT_CHARGER_TEXT, FAQ.ANSWER_ABOUT_CHARGER_TEXT},
+                {FAQ.QUESTION_ABOUT_CANCEL_ORDER, FAQ.ANSWER_ABOUT_CANCEL_ORDER, FAQ.QUESTION_ABOUT_CANCEL_ORDER_TEXT, FAQ.ANSWER_ABOUT_CANCEL_ORDER_TEXT},
+                {FAQ.QUESTION_ABOUT_MKAD, FAQ.ANSWER_ABOUT_MKAD, FAQ.QUESTION_ABOUT_MKAD_TEXT, FAQ.ANSWER_ABOUT_MKAD_TEXT},
         };
     }
 
@@ -57,12 +57,16 @@ public class AccordionTest {
             // реализация
         objMainLandingPage.cookieButtonClick(); // клик по окну с куками
         objMainLandingPage.scrollToQuestion(questionLocator); // скролл до вопроса
-        String actualQuestionText = objMainLandingPage.getQuestionText(questionLocator);
-        assertEquals("Текст вопроса не совпадает с требованиями", expectedQuestionText, actualQuestionText);
-        objMainLandingPage.questionClick(questionLocator);
-        objMainLandingPage.waitForAnswerIsVisible(answerLocator);
-        String actualAnswerText = objMainLandingPage.getAnswerText(answerLocator);
-        assertEquals("Текст ответа не совпадает с требованиями", expectedAnswerText, actualAnswerText);
+        String actualQuestionText = objMainLandingPage.getQuestionText(questionLocator); // переменная, в которую
+        // будет записан текст вопроса из реализации
+        assertEquals("Текст вопроса не совпадает с требованиями", expectedQuestionText, actualQuestionText); // сравнение
+        // текста вопроса из требований и текстом из реализации
+        objMainLandingPage.questionClick(questionLocator); // клик по локатору с вопросом
+        objMainLandingPage.waitForAnswerIsVisible(answerLocator); // ожидание открытия карточки вопроса
+        String actualAnswerText = objMainLandingPage.getAnswerText(answerLocator); // переменная, в которую
+        // будет записан текст ответа из реализации
+        assertEquals("Текст ответа не совпадает с требованиями", expectedAnswerText, actualAnswerText); // сравнение
+        // текста ответа из требований и текстом из реализации
 
     }
 
